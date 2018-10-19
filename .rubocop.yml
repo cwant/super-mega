@@ -1,0 +1,38 @@
+AllCops:
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+  Exclude:
+    - 'app/channels/application_cable/channel.rb'
+    - 'app/channels/application_cable/connection.rb'
+    - 'bin/rails'
+    - 'bin/rake'
+    - 'bin/setup'
+    - 'bin/spring'
+    - 'bin/yarn'
+    - 'bin/update'
+    - 'db/**/*'
+    - 'tmp/**/*'
+    - 'vendor/**/*'
+  ExtraDetails: true
+  TargetRubyVersion: 2.5
+
+Layout/EmptyLinesAroundClassBody:
+  EnforcedStyle: empty_lines_except_namespace
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+  Exclude:
+    - config/application.rb
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 100
+  IgnoredPatterns: ['(\A|\s)#']
+
+Style/SymbolArray:
+  Enabled: false
