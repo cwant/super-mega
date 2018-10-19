@@ -2,8 +2,8 @@ class SlackMessageSearcher
 
   SLACK_SEARCH_URL = 'https://slack.com/api/search.messages'.freeze
 
-  def initialize
-    @api_token = Rails.application.credentials.slack[:api_key]
+  def initialize(api_token)
+    @api_token = api_token
   end
 
   def search(term)
