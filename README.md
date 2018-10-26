@@ -1,24 +1,12 @@
-# README
+# Super-Mega Search
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A website to aggregate knowledge search for an organization.
 
-Things you may want to cover:
+## What? How?
 
-* Ruby version
+It runs search API functions on several platforms (okay, just slack and mediawiki),
+and aggregates the results in a tabbed display.
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+You need to create `config/super-mega.yml`, `config/credentials.yml.enc` and
+`config/locales/super-mega.en.yml` (or whatever language you want to support).
+See example files with similar names.

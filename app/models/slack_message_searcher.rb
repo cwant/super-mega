@@ -2,8 +2,8 @@ class SlackMessageSearcher
 
   SLACK_SEARCH_URL = 'https://slack.com/api/search.messages'.freeze
 
-  def initialize(api_token)
-    @api_token = api_token
+  def initialize(config)
+    @api_token = config[:api_token]
   end
 
   def search(term)

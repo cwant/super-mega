@@ -1,0 +1,13 @@
+# See locales for mapping of display name
+# (e.g., searchers.names.slack_instance1 => 'Work Slack)'
+searchers:
+  slack_instance1:
+    # See credentials.yml.enc for API key
+    type: slack
+  slack_instance2:
+    # See credentials.yml.enc for API key
+    type: slack
+  mediawiki_instance1:
+    type: mediawiki
+    base_api_url: 'https://example.com/mediawiki/api.php'
+    base_wiki_url: 'https://example.com/mediawiki/index.php'

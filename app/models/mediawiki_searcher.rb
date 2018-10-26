@@ -1,7 +1,10 @@
 class MediawikiSearcher
 
-  def initialize(base_api_url)
-    @base_api_url = base_api_url
+  attr_reader :base_wiki_url
+
+  def initialize(config)
+    @base_api_url = config[:base_api_url]
+    @base_wiki_url = config[:base_wiki_url]
   end
 
   def search(term)
