@@ -33,3 +33,7 @@
 *~
 
 vendor/bundle
+
+config/super-mega.yml
+config/credentials.yml.enc
+config/locales/super-mega*
