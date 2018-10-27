@@ -3,9 +3,10 @@ class SearchersController < ApplicationController
   def index
     @active_searcher = SEARCHERS.keys.first
     return unless search_params[:tab]
-    if SEARCHERS.keys.include?(search_params[:tab].to_sym)
-      @active_searcher = search_params[:tab].to_sym
-    end
+
+    return unless SEARCHERS.key?(search_params[:tab].to_sym)
+
+    @active_searcher = search_params[:tab].to_sym
   end
 
   def show
