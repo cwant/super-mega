@@ -10,6 +10,7 @@ module ApplicationHelper
                   href: "##{searcher}",
                   id: "#{searcher}-tab",
                   'data-toggle': 'tab',
+                  'data-tab': "#{searcher}",
                   class: klass,
                   'aria-controls': searcher,
                   'aria-selected': is_active.to_s)
@@ -20,7 +21,7 @@ module ApplicationHelper
     klass = 'tab-pane fade search-results'
     is_active = (searcher == active_searcher)
     klass += ' show active' if is_active
-    content_tag(:div, "Content #{searcher}",
+    content_tag(:div, "",
                 id: searcher.to_s,
                 role: 'tabpanel',
                 class: klass,
