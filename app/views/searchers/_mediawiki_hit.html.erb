@@ -1,1 +1,3 @@
-<a target="_blank" href="https://docs.computecanada.ca/mediawiki/index.php?title=<%= hit['title']%>"><%= hit['title']%></a>
+<a target="_blank" href="<%= "#{@config[:base_wiki_url]}?title=#{hit['title']}" %>">
+  <%= hit['title']%>
+</a>
