@@ -2,6 +2,10 @@ class SearchersController < ApplicationController
 
   def index
     @active_searcher = SEARCHERS.keys.first
+    return unless search_params[:tab]
+    if SEARCHERS.keys.include?(search_params[:tab].to_sym)
+      @active_searcher = search_params[:tab].to_sym
+    end
   end
 
   def show
@@ -9,18 +13,18 @@ class SearchersController < ApplicationController
 
     raise ActionController::RoutingError unless SEARCHERS.key?(id)
 
-    config = SEARCHERS[id]
+    @config = SEARCHERS[id]
     respond_to do |format|
-      json = send("search_#{config[:type]}", config, search_params[:term])
+      json = send("search_#{@config[:type]}")
       format.json { render json: json }
     end
   end
 
   private
 
-  def search_slack(config, term)
-    searcher = SlackMessageSearcher.new(config)
-    json = searcher.search(term)
+  def search_slack
+    searcher = SlackMessageSearcher.new(@config)
+    json = searcher.search(search_params[:term])
     out = { hits: [] }
     json['messages']['matches'].each do |hit|
       if hit['type'] == 'message'
@@ -31,20 +35,20 @@ class SearchersController < ApplicationController
     out
   end
 
-  def search_mediawiki(config, term)
-    searcher = MediawikiSearcher.new(config)
-    json = searcher.search(term)
+  def search_mediawiki
+    searcher = MediawikiSearcher.new(@config)
+    json = searcher.search(search_params[:term])
     out = { hits: [] }
     json['query']['search'].each do |hit|
       text = render_to_string partial: 'mediawiki_hit.html.erb',
-                              locals: { hit: hit, base_wiki_url: searcher.base_wiki_url }
+                              locals: { hit: hit }
       out[:hits] << { text: text }
     end
     out
   end
 
   def search_params
-    params.permit(:term)
+    params.permit(:term, :tab, :page, :per_page, :sort, :direction)
   end
 
 end
