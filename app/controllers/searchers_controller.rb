@@ -24,8 +24,10 @@ class SearchersController < ApplicationController
   private
 
   def search_slack
-    searcher = SlackMessageSearcher.new(@config)
-    json = searcher.search(search_params[:term])
+    @searcher = SlackMessageSearcher.new(@config)
+                 .term(search_params[:term])
+                 .page(page)
+    json = @searcher.all
     out = { hits: [] }
     json['messages']['matches'].each do |hit|
       if hit['type'] == 'message'
@@ -33,18 +35,22 @@ class SearchersController < ApplicationController
         out[:hits] << { text: text }
       end
     end
+    out[:html] = out[:hits].map { |h| h[:text] }.join('<br>')
     out
   end
 
   def search_mediawiki
-    searcher = MediawikiSearcher.new(@config)
-    json = searcher.search(search_params[:term])
+    @searcher = MediawikiSearcher.new(@config)
+                 .term(search_params[:term])
+                 .page(page)
+    json = @searcher.all
     out = { hits: [] }
     json['query']['search'].each do |hit|
       text = render_to_string partial: 'mediawiki_hit.html.erb',
                               locals: { hit: hit }
       out[:hits] << { text: text }
     end
+    out[:html] = out[:hits].map { |h| h[:text] }.join('<br>')
     out
   end
 
@@ -52,4 +58,7 @@ class SearchersController < ApplicationController
     params.permit(:term, :tab, :page, :per_page, :sort, :direction)
   end
 
+  def page
+    search_params[:page] || 1
+  end
 end

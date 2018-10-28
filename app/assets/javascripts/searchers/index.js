@@ -10,7 +10,8 @@ $(document).on('turbolinks:load', function() {
 
   state = {
     'term': undefined,
-    'tab': undefined
+    'tab': undefined,
+    'page': undefined
   }
   last_state = clone(state);
 
@@ -26,19 +27,22 @@ $(document).on('turbolinks:load', function() {
       $('#search-term').val(state['term']);
     }
 
-    if (state['term'] != last_state['term']) {
+    state['page'] = params.get('page');
+    if (!state['page']) {
+      state['page'] = 1;
+    }
+
+    if ((state['term'] != last_state['term']) ||
+        (state['page'] != last_state['page'])) {
 
       $('.search-results').each(function() {
         var results = $(this);
         if (state['term']) {
-          var page = 1;
-          var search_url = $(this).data('base-url') + '?term=' + state['term'];
+          var search_url = $(this).data('base-url') + '?term=' + state['term'] +
+              '&page=' + state['page'];
           var hits = ''
           $.getJSON(search_url).done(function(data) {
-            $.each(data.hits, function(idx, hit) {
-              hits += '<li>' + hit.text + '</li>';
-            });
-            results.html(hits);
+            results.html(data.html);
           });
         }
         else {
@@ -62,6 +66,9 @@ $(document).on('turbolinks:load', function() {
       else {
         params.delete(key);
       }
+    }
+    if (params.get('page') == 1) {
+      params.delete('page');
     }
     var href = window.location.pathname + '?' + params.toString();
     window.history.pushState(state, '', href);

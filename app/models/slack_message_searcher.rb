@@ -1,4 +1,4 @@
-class SlackMessageSearcher
+class SlackMessageSearcher < Searcher
 
   SLACK_SEARCH_URL = 'https://slack.com/api/search.messages'.freeze
 
@@ -6,10 +6,26 @@ class SlackMessageSearcher
     @api_token = config[:api_token]
   end
 
-  def search(term)
-    url = "#{SLACK_SEARCH_URL}?token=#{@api_token}&query=#{term}"
+  def reify
+    return results if results.any?
+
+    return results unless criteria[:term]
+
+    url = "#{SLACK_SEARCH_URL}?token=#{@api_token}&query=#{criteria[:term]}&"\
+          "count=#{max_per_page}&page=#{page_value}"
+
     response = RestClient.get(url)
-    JSON.parse(response)
+    @results = JSON.parse(response)
+  end
+
+  def total_count
+    reify
+    results['paging']['total']
+  end
+
+  def count
+    reify
+    results['paging']['count']
   end
 
 end
