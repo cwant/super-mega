@@ -1,4 +1,4 @@
-<ul>
+<ul class="list-group mb-3">
   <% @searcher.each do |hit| %>
     <%= render partial: 'mediawiki_hit.html.erb', locals: { hit: hit } %>
   <% end %>

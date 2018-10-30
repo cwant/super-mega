@@ -1,5 +1,7 @@
 class SearchersController < ApplicationController
 
+  include SearchTabLabelHelper
+
   def index
     @active_searcher = SEARCHERS.keys.first
     return unless search_params[:tab]
@@ -27,16 +29,22 @@ class SearchersController < ApplicationController
     @searcher = SlackMessageSearcher.new(@config)
                  .term(search_params[:term])
                  .page(page)
-    @searcher.all
-    { html: render_to_string(partial: 'slack_results.html.erb') }
+    json = @searcher.all
+    out = { results_html: render_to_string(partial: 'slack_results.html.erb') }
+    out[:tab_label_html] = search_tab_label(params[:id], count: @searcher.total_count)
+    out[:raw] = json if Rails.env.development?
+    out
   end
 
   def search_mediawiki
     @searcher = MediawikiSearcher.new(@config)
                  .term(search_params[:term])
                  .page(page)
-    @searcher.all
-    { html: render_to_string(partial: 'mediawiki_results.html.erb') }
+    json = @searcher.all
+    out = { results_html: render_to_string(partial: 'mediawiki_results.html.erb') }
+    out[:tab_label_html] = search_tab_label(params[:id], count: @searcher.total_count)
+    out[:raw] = json if Rails.env.development?
+    out
   end
 
   def search_params

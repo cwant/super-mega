@@ -37,12 +37,14 @@ $(document).on('turbolinks:load', function() {
 
       $('.search-results').each(function() {
         var results = $(this);
+        var label = $('#' + results.data('tab-id'));
         if (state['term']) {
           var search_url = $(this).data('base-url') + '?term=' + state['term'] +
               '&page=' + state['page'];
           var hits = ''
           $.getJSON(search_url).done(function(data) {
-            results.html(data.html);
+            results.html(data.results_html);
+            label.html(data.tab_label_html);
           });
         }
         else {
@@ -94,7 +96,7 @@ $(document).on('turbolinks:load', function() {
                           function(event) {
     var data = event.detail[0];
     var results = $(this).closest('.search-results');
-    results.html(data.html);
+    results.html(data.results_html);
 
     var href = $(this).attr('href');
     var query_string = href.substring(href.indexOf('?') + 1);
