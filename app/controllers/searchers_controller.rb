@@ -27,31 +27,16 @@ class SearchersController < ApplicationController
     @searcher = SlackMessageSearcher.new(@config)
                  .term(search_params[:term])
                  .page(page)
-    json = @searcher.all
-    out = { hits: [] }
-    json['messages']['matches'].each do |hit|
-      if hit['type'] == 'message'
-        text = "@#{hit['username']}: <a href='#{hit['permalink']}'>#{hit['text']}</a>"
-        out[:hits] << { text: text }
-      end
-    end
-    out[:html] = out[:hits].map { |h| h[:text] }.join('<br>')
-    out
+    @searcher.all
+    { html: render_to_string(partial: 'slack_results.html.erb') }
   end
 
   def search_mediawiki
     @searcher = MediawikiSearcher.new(@config)
                  .term(search_params[:term])
                  .page(page)
-    json = @searcher.all
-    out = { hits: [] }
-    json['query']['search'].each do |hit|
-      text = render_to_string partial: 'mediawiki_hit.html.erb',
-                              locals: { hit: hit }
-      out[:hits] << { text: text }
-    end
-    out[:html] = out[:hits].map { |h| h[:text] }.join('<br>')
-    out
+    @searcher.all
+    { html: render_to_string(partial: 'mediawiki_results.html.erb') }
   end
 
   def search_params

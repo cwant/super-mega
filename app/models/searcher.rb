@@ -29,7 +29,7 @@ class Searcher
     update_criteria(:page, page.to_i)
   end
 
-  def limit(offset)
+  def limit(per_page)
     update_criteria(:limit, offset)
   end
 
@@ -55,11 +55,16 @@ class Searcher
   end
 
   def limit_value
-    criteria[:limit] ||= LIMIT_VALUE
+    criteria[:limit] ||= MAX_PER_PAGE
   end
 
   def all
     reify
+  end
+
+  def each(&block)
+    reify
+    iteratable_results.each(&block)
   end
 
 end

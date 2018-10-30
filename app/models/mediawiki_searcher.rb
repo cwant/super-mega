@@ -19,6 +19,10 @@ class MediawikiSearcher < Searcher
     @results = JSON.parse(response)
   end
 
+  def iteratable_results
+    return results['query']['search']
+  end
+
   def total_count
     reify
     results['query']['searchinfo']['totalhits']

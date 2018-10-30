@@ -1,0 +1,7 @@
+<ul>
+  <% @searcher.each do |hit| %>
+    <%= render partial: 'mediawiki_hit.html.erb', locals: { hit: hit } %>
+  <% end %>
+</ul>
+
+<%= paginate @searcher, remote: true %>

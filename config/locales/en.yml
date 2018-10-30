@@ -13,3 +13,12 @@ en:
   searchers:
     index:
       placeholder: 'Search everything...'
+
+  # Shamelessly stolen from ualbertalib/jupiter (thanks Murny!)
+  views:
+    pagination:
+      first: "&laquo; <span class='d-none d-md-inline'>First</span>"
+      last: "<span class='d-none d-md-inline'>Last</span> &raquo;"
+      previous: "&lsaquo; <span class='d-none d-md-inline'>Prev</span>"
+      next: "<span class='d-none d-md-inline'>Next</span> &rsaquo;"
+      truncate: "..."

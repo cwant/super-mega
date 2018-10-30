@@ -90,6 +90,20 @@ $(document).on('turbolinks:load', function() {
     update_query_string();
   });
 
+  $(document).on("ajax:success", 'a.page-link',
+                          function(event) {
+    var data = event.detail[0];
+    var results = $(this).closest('.search-results');
+    results.html(data.html);
+
+    var href = $(this).attr('href');
+    var query_string = href.substring(href.indexOf('?') + 1);
+    var params = new URLSearchParams(query_string);
+    var page = params.get('page') || 1;
+    state['page'] = page;
+    update_query_string();
+  });
+
   update_tab();
   update_search();
 

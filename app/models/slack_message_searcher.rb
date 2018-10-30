@@ -18,9 +18,13 @@ class SlackMessageSearcher < Searcher
     @results = JSON.parse(response)
   end
 
+  def iteratable_results
+    return results['messages']['matches']
+  end
+
   def total_count
     reify
-    results['paging']['total']
+    results['messages']['paging']['total']
   end
 
   def count
