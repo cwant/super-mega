@@ -11,11 +11,13 @@ $(document).on('turbolinks:load', function() {
   state = {
     'term': undefined,
     'tab': undefined,
-    'page': undefined
+    'page': undefined,
+    'tab_pages': {}
   }
   last_state = clone(state);
 
-  function update_search() {
+  function update_search(reset_page) {
+    reset_page = reset_page || false;
     var params = new URLSearchParams(window.location.search);
     var query_string_changes = {};
 
@@ -28,10 +30,11 @@ $(document).on('turbolinks:load', function() {
     }
 
     state['page'] = params.get('page');
-    if (!state['page']) {
+    if (!state['page'] || reset_page) {
       state['page'] = 1;
     }
 
+    console.log(state['page'])
     if ((state['term'] != last_state['term']) ||
         (state['page'] != last_state['page'])) {
 
@@ -61,6 +64,9 @@ $(document).on('turbolinks:load', function() {
     // TODO: investigate visual state on back button (e.g., showing correct tab)
     var params = new URLSearchParams(window.location.search);
     for (var key in state) {
+      if (key == 'tab_pages') {
+        continue;
+      }
       item = state[key];
       if (item) {
         params.set(key, state[key]);
@@ -68,6 +74,9 @@ $(document).on('turbolinks:load', function() {
       else {
         params.delete(key);
       }
+    }
+    if (state['tab'] in state['tab_pages']) {
+      params.set('page', state['tab_pages'][state['tab']]);
     }
     if (params.get('page') == 1) {
       params.delete('page');
@@ -81,17 +90,30 @@ $(document).on('turbolinks:load', function() {
     last_state = clone(state);
   }
 
+  # Search button click
   $('#search-submit').on('click', function() {
-    update_search();
+    state['tab_pages'] = {};
+    update_search(true);
     update_query_string();
   });
+  # Search input on enter
+  $('#search-term').keyup(function(e){
+    if(e.keyCode == 13)
+    {
+      state['tab_pages'] = {};
+      update_search(true);
+      update_query_string();
+    }
+  });
 
+  # Pressing a tab
   $('#source-select a').on('click', function() {
     var tab = $(this).data('tab')
     state['tab'] = tab;
     update_query_string();
   });
 
+  # Page links
   $(document).on("ajax:success", 'a.page-link',
                           function(event) {
     var data = event.detail[0];
@@ -103,9 +125,13 @@ $(document).on('turbolinks:load', function() {
     var params = new URLSearchParams(query_string);
     var page = params.get('page') || 1;
     state['page'] = page;
+    if (state['tab']) {
+      state['tab_pages'][state['tab']] = page;
+    }
     update_query_string();
   });
 
+  # When page first loads ...
   update_tab();
   update_search();
 

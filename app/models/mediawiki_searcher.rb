@@ -13,7 +13,7 @@ class MediawikiSearcher < Searcher
     return results unless criteria[:term]
 
     url = "#{@base_api_url}?action=query&list=search&srsearch=#{criteria[:term]}"\
-          "&srlimit=#{max_per_page}&sroffset=#{offset_value}&format=json"
+          "&srwhat=text&srlimit=#{max_per_page}&sroffset=#{offset_value}&format=json"
 
     response = RestClient.get(url)
     @results = JSON.parse(response)
