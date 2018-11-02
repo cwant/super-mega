@@ -90,13 +90,14 @@ $(document).on('turbolinks:load', function() {
     last_state = clone(state);
   }
 
-  # Search button click
+  // Search button click
   $('#search-submit').on('click', function() {
     state['tab_pages'] = {};
     update_search(true);
     update_query_string();
   });
-  # Search input on enter
+
+  // Search input on enter
   $('#search-term').keyup(function(e){
     if(e.keyCode == 13)
     {
@@ -106,14 +107,14 @@ $(document).on('turbolinks:load', function() {
     }
   });
 
-  # Pressing a tab
+  // Pressing a panel tab
   $('#source-select a').on('click', function() {
     var tab = $(this).data('tab')
     state['tab'] = tab;
     update_query_string();
   });
 
-  # Page links
+  // Handle links used for pagination
   $(document).on("ajax:success", 'a.page-link',
                           function(event) {
     var data = event.detail[0];
@@ -131,7 +132,7 @@ $(document).on('turbolinks:load', function() {
     update_query_string();
   });
 
-  # When page first loads ...
+  // When page first loads ...
   update_tab();
   update_search();
 
