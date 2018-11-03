@@ -1,7 +1,7 @@
 class Searcher
 
   include Enumerable
-  include Kaminari::PageScopeMethods  
+  include Kaminari::PageScopeMethods
 
   MAX_PER_PAGE = 10
   LIMIT_VALUE = 500
@@ -30,7 +30,7 @@ class Searcher
   end
 
   def limit(per_page)
-    update_criteria(:limit, offset)
+    update_criteria(:limit, per_page)
   end
 
   def max_per_page
@@ -40,11 +40,6 @@ class Searcher
   def max_pages
     MAX_PAGES
   end
-
-  
-  #def offset(offset)
-  #  update_criteria(:offset, offset)
-  #end
 
   def offset_value
     (page_value - 1) * max_per_page

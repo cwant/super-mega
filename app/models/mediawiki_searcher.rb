@@ -20,7 +20,7 @@ class MediawikiSearcher < Searcher
   end
 
   def iteratable_results
-    return results['query']['search']
+    results['query']['search']
   end
 
   def total_count
@@ -32,4 +32,5 @@ class MediawikiSearcher < Searcher
     reify
     results['query']['search']&.count || 0
   end
+
 end

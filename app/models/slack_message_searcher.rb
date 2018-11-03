@@ -19,7 +19,7 @@ class SlackMessageSearcher < Searcher
   end
 
   def iteratable_results
-    return results['messages']['matches']
+    results['messages']['matches']
   end
 
   def total_count

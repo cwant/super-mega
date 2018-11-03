@@ -27,8 +27,8 @@ class SearchersController < ApplicationController
 
   def search_slack
     @searcher = SlackMessageSearcher.new(@config)
-                 .term(search_params[:term])
-                 .page(page)
+                                    .term(search_params[:term])
+                                    .page(page)
     json = @searcher.all
     out = { results_html: render_to_string(partial: 'slack_results.html.erb') }
     out[:tab_label_html] = search_tab_label(params[:id], count: @searcher.total_count)
@@ -38,8 +38,8 @@ class SearchersController < ApplicationController
 
   def search_mediawiki
     @searcher = MediawikiSearcher.new(@config)
-                 .term(search_params[:term])
-                 .page(page)
+                                 .term(search_params[:term])
+                                 .page(page)
     json = @searcher.all
     out = { results_html: render_to_string(partial: 'mediawiki_results.html.erb') }
     out[:tab_label_html] = search_tab_label(params[:id], count: @searcher.total_count)
@@ -54,4 +54,5 @@ class SearchersController < ApplicationController
   def page
     search_params[:page] || 1
   end
+
 end
