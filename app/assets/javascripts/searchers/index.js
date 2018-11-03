@@ -29,21 +29,18 @@ $(document).on('turbolinks:load', function() {
       $('#search-term').val(state['term']);
     }
 
-    state['page'] = params.get('page');
-    if (!state['page'] || reset_page) {
-      state['page'] = 1;
-    }
+    initialize_tab_page_state(reset_page);
 
-    console.log(state['page'])
     if ((state['term'] != last_state['term']) ||
         (state['page'] != last_state['page'])) {
 
       $('.search-results').each(function() {
         var results = $(this);
+        var tab = $(this).attr('id');
         var label = $('#' + results.data('tab-id'));
         if (state['term']) {
           var search_url = $(this).data('base-url') + '?term=' + state['term'] +
-              '&page=' + state['page'];
+              '&page=' + state['tab_pages'][tab];
           var hits = ''
           $.getJSON(search_url).done(function(data) {
             results.html(data.results_html);
@@ -57,6 +54,31 @@ $(document).on('turbolinks:load', function() {
     }
 
     last_state = clone(state);
+  }
+
+  function initialize_tab_page_state(reset_page) {
+    var params = new URLSearchParams(window.location.search);
+
+    state['page'] = params.get('page');
+
+    if (!state['page'] || reset_page) {
+      state['page'] = 1;
+    }
+
+    $('#source-select a').each(function() {
+      var tab = $(this).data('tab');
+      var active = $(this).hasClass('active');
+
+      if (active) {
+        state['tab'] = tab
+        state['tab_pages'][tab] = state['page'];
+      }
+      else {
+        if (!state['tab_pages'][tab] || reset_page) {
+          state['tab_pages'][tab] = 1;
+        }
+      }
+    });
   }
 
   function update_query_string() {
@@ -85,11 +107,6 @@ $(document).on('turbolinks:load', function() {
     window.history.pushState(state, '', href);
   }
 
-  function update_tab() {
-    state['tab'] = $('#source-select a.active').data('tab');
-    last_state = clone(state);
-  }
-
   // Search button click
   $('#search-submit').on('click', function() {
     state['tab_pages'] = {};
@@ -111,6 +128,9 @@ $(document).on('turbolinks:load', function() {
   $('#source-select a').on('click', function() {
     var tab = $(this).data('tab')
     state['tab'] = tab;
+    if (state['tab_pages'][state['tab']]) {
+      state['page'] = state['tab_pages'][state['tab']];
+    }
     update_query_string();
   });
 
@@ -126,6 +146,7 @@ $(document).on('turbolinks:load', function() {
     var params = new URLSearchParams(query_string);
     var page = params.get('page') || 1;
     state['page'] = page;
+    state['tab'] = $('#source-select a.active').data('tab');
     if (state['tab']) {
       state['tab_pages'][state['tab']] = page;
     }
@@ -133,7 +154,6 @@ $(document).on('turbolinks:load', function() {
   });
 
   // When page first loads ...
-  update_tab();
   update_search();
 
 });
