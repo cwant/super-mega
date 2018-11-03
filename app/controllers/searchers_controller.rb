@@ -18,34 +18,27 @@ class SearchersController < ApplicationController
 
     @config = SEARCHERS[id]
     respond_to do |format|
-      json = send("search_#{@config[:type]}")
+      json = search(@config[:type])
       format.json { render json: json }
     end
   end
 
   private
 
-  def search_slack
-    @searcher = SlackMessageSearcher.new(@config)
-                                    .term(search_params[:term])
-                                    .page(page)
+  def search(type)
+    search_class = "#{type}_searcher".classify.constantize
+    template = "#{type}_results.html.erb"
+
+    @searcher = search_class.new(@config)
+                            .term(search_params[:term])
+                            .page(page)
     json = @searcher.all
-    out = { results_html: render_to_string(partial: 'slack_results.html.erb') }
+    out = { results_html: render_to_string(partial: template) }
     out[:tab_label_html] = search_tab_label(params[:id], count: @searcher.total_count)
     out[:raw] = json if Rails.env.development?
     out
   end
 
-  def search_mediawiki
-    @searcher = MediawikiSearcher.new(@config)
-                                 .term(search_params[:term])
-                                 .page(page)
-    json = @searcher.all
-    out = { results_html: render_to_string(partial: 'mediawiki_results.html.erb') }
-    out[:tab_label_html] = search_tab_label(params[:id], count: @searcher.total_count)
-    out[:raw] = json if Rails.env.development?
-    out
-  end
 
   def search_params
     params.permit(:term, :tab, :page, :per_page, :sort, :direction)

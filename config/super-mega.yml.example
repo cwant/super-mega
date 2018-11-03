@@ -11,3 +11,6 @@ searchers:
     type: mediawiki
     base_api_url: 'https://example.com/mediawiki/api.php'
     base_wiki_url: 'https://example.com/mediawiki/index.php'
+  wordpress_instance:
+    type :wordpress
+    api_url: 'https://www.example.com/wp-json/wp/v2/posts'

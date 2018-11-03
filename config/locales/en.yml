@@ -6,6 +6,7 @@
 #     slack_instance1: 'Work Slack'
 #     slack_instance2: 'Fun Slack'
 #     mediawiki_instance1: 'Random thoughts'
+#     wordpress_instance: 'Super PR Stuff'
 #   index:
 #     header: 'Super-Mega Search'
 

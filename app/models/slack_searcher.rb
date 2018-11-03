@@ -1,4 +1,4 @@
-class SlackMessageSearcher < Searcher
+class SlackSearcher < Searcher
 
   SLACK_SEARCH_URL = 'https://slack.com/api/search.messages'.freeze
 
