@@ -33,4 +33,7 @@ class MediawikiSearcher < Searcher
     results['query']['search']&.count || 0
   end
 
+  def hit_url(hit)
+    "#{@base_wiki_url}?title=#{hit['title']}"
+  end
 end
