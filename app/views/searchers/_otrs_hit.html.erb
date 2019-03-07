@@ -1,5 +1,19 @@
-<li class="list-group-item list-group-item-action">
-  <a target="_blank" href="<%= @searcher.hit_url(hit) %>">
-    <%= hit['Title'] %>
-  </a>
-</li>
+<a target="_blank"
+   href="<%= @searcher.hit_url(hit) %>"
+   class="list-group-item list-group-item-action flex-column align-items-start">
+  <div class="d-flex w-100 justify-content-between">
+    <h5><%= "##{hit['TicketNumber']}: #{hit['Title']}" %></h5>
+    <div>
+      <%= otrs_state(hit) %>
+      <small><%= otrs_age(hit) %></small>
+    </div>
+  </div>
+  <p class="mb-1"><%= otrs_first_body(hit) %></p>
+  <div class="d-flex w-100 justify-content-between">
+    <small><%= otrs_customer(hit) %></small>
+    <div>
+      <%= otrs_queue(hit) %>
+      <small><%= otrs_owner(hit) %></small>
+    </div>
+  </div>
+</a>

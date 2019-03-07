@@ -35,7 +35,12 @@ class OtrsSearcher < Searcher
   end
 
   def hit_url(hit)
-    "#{@base_url}/otrs/index.pl?Action=AgentTicketZoom;TicketID=#{hit['TicketID']}"
+    url = "#{@base_url}/otrs/index.pl?Action=AgentTicketZoom;TicketID=#{hit['TicketID']}"
+
+    # Try to go to first article in ticket
+    article = hit['Article']&.first
+    url += "#" + article['ArticleID'] if article
+    url
   end
 
   private
@@ -60,7 +65,9 @@ class OtrsSearcher < Searcher
   def ticket_list_payload(tickets)
     {'UserLogin' => @username,
      'Password' => @password,
-     'TicketID' => tickets
+     'TicketID' => tickets,
+     'AllArticles': 1,
+     'ArticleLimit': 1 
     }.to_json
   end
 

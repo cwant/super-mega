@@ -23,3 +23,9 @@ en:
       previous: "&lsaquo; <span class='d-none d-md-inline'>Prev</span>"
       next: "<span class='d-none d-md-inline'>Next</span> &rsaquo;"
       truncate: "..."
+    otrs:
+      queue: "Queue: %{queue}"
+      age: "%{age} old"
+      state: "%{state}"
+      owner: "Owner: %{owner}"
+      customer: "Customer: %{customer}"
