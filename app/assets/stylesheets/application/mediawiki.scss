@@ -1,0 +1,6 @@
+$searchmatch: darken($blue, 15%); 
+
+span.searchmatch {
+  font-weight: bold;
+  color: $searchmatch;
+}

@@ -1,5 +1,9 @@
-<li class="list-group-item list-group-item-action">
-  <a target="_blank" href="<%= "#{@searcher.hit_url(hit)}" %>">
-    <%= hit['title']%>
-  </a>
-</li>
+<a target="_blank"
+   href="<%= "#{@searcher.hit_url(hit)}" %>"
+   class="list-group-item list-group-item-action flex-column align-items-start">
+  <div class="d-flex w-100 justify-content-between">
+    <h5><%= hit['title']%></h5>
+    <small><%= mediawiki_age(hit) %></small>
+  </div>
+  <p class="mb-1 pl-3 font-italic"><%= hit['snippet'].html_safe %></p>
+</a>

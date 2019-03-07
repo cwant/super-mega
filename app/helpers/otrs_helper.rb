@@ -27,14 +27,6 @@ module OtrsHelper
   end
 
   def otrs_first_body(hit)
-    content_tag(:p,
-                body_strip(hit),
-                class: 'font-italic')
-  end
-
-  private
-
-  def body_strip(hit)
     body = hit['Article']&.first&.fetch('Body') || ''
     # Scrub email signature and beyond (common pattern)
     body = body.match(/(^.*)\s\s--\s/).to_a.last || body
@@ -46,4 +38,5 @@ module OtrsHelper
              body
            end
   end
+
 end
