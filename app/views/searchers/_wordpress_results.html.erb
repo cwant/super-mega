@@ -1,7 +1,7 @@
-<ul class="list-group mb-3">
+<div class="list-group mb-3">
   <% @searcher.each do |hit| %>
     <%= render partial: 'wordpress_hit.html.erb', locals: { hit: hit } %>
   <% end %>
-</ul>
+</div>
 
 <%= paginate @searcher, remote: true %>

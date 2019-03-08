@@ -1,5 +1,9 @@
-<li class="list-group-item list-group-item-action">
-  <a target="_blank" href="<%= hit['link'] %>">
-    <%= hit['title']['rendered'] %>
-  </a>
-</li>
+<a target="_blank"
+   href="<%= hit['link'] %>"
+   class="list-group-item list-group-item-action flex-column align-items-start">
+  <div class="d-flex w-100 justify-content-between">
+    <h5><%= hit['title']['rendered'].html_safe %></h5>
+    <small><%= wordpress_age(hit) %></small>
+  </div>
+  <p class="mb-1 pl-3 font-italic"><%= wordpress_excerpt(hit) %></p>
+</a>
