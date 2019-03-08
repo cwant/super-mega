@@ -29,9 +29,9 @@ module OtrsHelper
   def otrs_first_body(hit)
     body = hit['Article']&.first&.fetch('Body') || ''
     # Scrub email signature and beyond (common pattern)
-    body = body.match(/(^.*)\s\s--\s/).to_a.last || body
+    body = body.match(/(^.*)\s\s--\s/m).to_a.last || body
     # Scrub ticket link and beyond
-    body = body.match(/(^.*)View this ticket here/).to_a.last || body
+    body = body.match(/(^.*)View this ticket here/m).to_a.last || body
     body = if body.length > 300
              body[0..249] + '...'
            else
