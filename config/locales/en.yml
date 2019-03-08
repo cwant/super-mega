@@ -29,3 +29,6 @@ en:
       state: "%{state}"
       owner: "Owner: %{owner}"
       customer: "Customer: %{customer}"
+    slack:
+      redacted: 'Private message redacted'
+      age: "%{age} old"

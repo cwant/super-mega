@@ -1,0 +1,6 @@
+$searchmatch: darken($blue, 15%); 
+
+span.slack-user {
+  font-weight: bold;
+  color: $searchmatch;
+}
