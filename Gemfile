@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.5.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.1'
+gem 'rails', '~> 5.2.2'
 
 # Security issue
 gem 'rack', '~> 2.0.6'
@@ -45,9 +45,13 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'rest-client'
 
 # Assets
-gem 'bootstrap', '~> 4.1.3'
 gem 'font-awesome-rails'
 gem 'jquery-rails'
+
+# From security alerts
+gem "actionview", ">= 5.2.2.1"
+gem "railties", ">= 5.2.2.1"
+gem "bootstrap", ">= 4.3.1"
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
