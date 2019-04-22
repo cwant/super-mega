@@ -1,16 +1,18 @@
-<a target="_blank"
-   href="<%= hit['permalink'] %>"
-   class="list-group-item list-group-item-action flex-column align-items-start">
-  <% if hit['type'] == 'message' %>
+<% if hit['type'] == 'message' %>
+  <a target="_blank"
+     href="<%= hit['permalink'] %>"
+     class="list-group-item list-group-item-action flex-column align-items-start">
     <div class="d-flex w-100 justify-content-between">
       <span class='slack-user'>@<%= hit['username'] %></span>
       <small><%= slack_age(hit) %></small>
     </div>
     <p class="mb-1 pl-3 font-italic"><%= hit['text'] %></p>
     <div class="d-flex w-100 justify-content-between">
-      <small><%= hit['channel']['name'] %></small>
+      <small>#<%= hit['channel']['name'] %></small>
     </div>
-  <% else %>
+  </a>
+<% else %>
+  <div class="list-group-item list-group-item-action flex-column align-items-start">
     <%= t('views.slack.redacted') %>
-  <% end %>
-</a>
+  </div>
+<% end %>
