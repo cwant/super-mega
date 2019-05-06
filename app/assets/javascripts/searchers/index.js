@@ -42,6 +42,12 @@ $(document).on('turbolinks:load', function() {
           var search_url = $(this).data('base-url') + '?term=' + state['term'] +
               '&page=' + state['tab_pages'][tab];
           var hits = ''
+
+          // Blank page during fetch, show waiting status in tab
+          results.html('');
+          label.html(label.data('waiting'));
+
+          // Fetch data
           $.getJSON(search_url).done(function(data) {
             results.html(data.results_html);
             label.html(data.tab_label_html);

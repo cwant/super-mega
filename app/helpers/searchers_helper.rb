@@ -9,6 +9,7 @@ module SearchersHelper
                   id: "#{searcher}-tab",
                   'data-toggle': 'tab',
                   'data-tab': searcher.to_s,
+                  'data-waiting': search_tab_label(searcher, count: '*'),
                   class: klass,
                   'aria-controls': searcher,
                   'aria-selected': is_active.to_s)
