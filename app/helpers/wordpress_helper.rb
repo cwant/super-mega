@@ -2,7 +2,7 @@ module WordpressHelper
   def wordpress_age(hit)
     content_tag(:span,
                 t('views.otrs.age',
-                  age: time_ago_in_words(DateTime.parse(hit['date']))))
+                  age: time_ago_in_words(Time.parse(hit['date']))))
   end
 
   def wordpress_excerpt(hit)

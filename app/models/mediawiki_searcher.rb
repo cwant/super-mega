@@ -8,7 +8,7 @@ class MediawikiSearcher < Searcher
     auth = config.slice(:username, :password)
     @auth = if auth.count == 2
               auth
-            else
+            else # rubocop:disable Style/EmptyElse
               nil
             end
     @token = nil
@@ -33,15 +33,15 @@ class MediawikiSearcher < Searcher
       'lgtoken' => @token,
       'format' => 'json'
     }
-    response = RestClient.post(@base_api_url, login_params, {cookies: @cookies})
+    response = RestClient.post(@base_api_url, login_params, cookies: @cookies)
 
     # Gotta swap out those cookies
     @cookies = response.cookies
 
-    return (response.code == 200)
+    (response.code == 200)
   end
 
-  def reify
+  def reify # rubocop:disable Metrics/AbcSize
     return results if results.any?
 
     return results unless criteria[:term]
@@ -79,4 +79,5 @@ class MediawikiSearcher < Searcher
   def hit_url(hit)
     "#{@base_wiki_url}?title=#{hit['title']}"
   end
+
 end

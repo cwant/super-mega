@@ -32,11 +32,11 @@ module OtrsHelper
     body = body.match(/(^.*)\s\s--\s/m).to_a.last || body
     # Scrub ticket link and beyond
     body = body.match(/(^.*)View this ticket here/m).to_a.last || body
-    body = if body.length > 300
-             body[0..249] + '...'
-           else
-             body
-           end
-  end
 
+    if body.length > 300
+      body[0..249] + '...'
+    else
+      body
+    end
+  end
 end

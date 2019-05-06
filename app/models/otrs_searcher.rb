@@ -14,8 +14,8 @@ class OtrsSearcher < Searcher
     response = RestClient::Request.execute(method: :get,
                                            url: search_endpoint,
                                            payload: search_payload,
-                                           headers: {content_type: :json,
-                                                     accept: :json})
+                                           headers: { content_type: :json,
+                                                      accept: :json })
     @results = JSON.parse(response)
     fetch_tickets
   end
@@ -39,7 +39,7 @@ class OtrsSearcher < Searcher
 
     # Try to go to first article in ticket
     article = hit['Article']&.first
-    url += "#" + article['ArticleID'] if article
+    url += '#' + article['ArticleID'] if article
     url
   end
 
@@ -51,9 +51,10 @@ class OtrsSearcher < Searcher
   end
 
   def search_payload
-    {'UserLogin' => @username,
-     'Password' => @password,
-     'Fulltext' => criteria[:term]
+    {
+      'UserLogin' => @username,
+      'Password' => @password,
+      'Fulltext' => criteria[:term]
     }.to_json
   end
 
@@ -63,27 +64,28 @@ class OtrsSearcher < Searcher
   end
 
   def ticket_list_payload(tickets)
-    {'UserLogin' => @username,
-     'Password' => @password,
-     'TicketID' => tickets,
-     'AllArticles': 1,
-     'ArticleLimit': 1 
+    {
+      'UserLogin' => @username,
+      'Password' => @password,
+      'TicketID' => tickets,
+      'AllArticles': 1,
+      'ArticleLimit': 1
     }.to_json
   end
 
   def fetch_tickets
     ticket_ids = (@results['TicketID'] ||
                   [])[offset_value..(offset_value + max_per_page - 1)] || []
-    if ticket_ids.count == 0
+    if ticket_ids.count == 0 # rubocop:disable Style/NumericPredicate
       @results['tickets'] = []
       return
     end
-    response = RestClient::Request
-                 .execute(method: :get,
-                          url: ticket_list_endpoint,
-                          payload: ticket_list_payload(ticket_ids),
-                          headers: {content_type: :json,
-                                    accept: :json})
+    response =
+      RestClient::Request.execute(method: :get,
+                                  url: ticket_list_endpoint,
+                                  payload: ticket_list_payload(ticket_ids),
+                                  headers: { content_type: :json,
+                                             accept: :json })
     @results['tickets'] = JSON.parse(response).fetch('Ticket', [])
   end
 
