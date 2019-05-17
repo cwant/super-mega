@@ -11,6 +11,13 @@ class OtrsSearcher < Searcher
 
     return results unless criteria[:term]
 
+    login_response = RestClient::Request.execute(method: :post,
+                                                 url: login_endpoint,
+                                                 payload: login_payload,
+                                                 headers: { content_type: :json,
+                                                            accept: :json })
+    @session_id = JSON.parse(login_response.body)['SessionID']
+
     response = RestClient::Request.execute(method: :get,
                                            url: search_endpoint,
                                            payload: search_payload,
@@ -45,6 +52,18 @@ class OtrsSearcher < Searcher
 
   private
 
+  def login_endpoint
+    "#{@base_url}/otrs/nph-genericinterface.pl/Webservice/"\
+    'GenericTicketConnectorREST/Session'
+  end
+
+  def login_payload
+    {
+      'UserLogin' => @username,
+      'Password' => @password
+    }.to_json
+  end
+
   def search_endpoint
     "#{@base_url}/otrs/nph-genericinterface.pl/Webservice/"\
     'GenericTicketConnectorREST/Ticket'
@@ -52,8 +71,7 @@ class OtrsSearcher < Searcher
 
   def search_payload
     {
-      'UserLogin' => @username,
-      'Password' => @password,
+      'SessionID' => @session_id,
       'Fulltext' => criteria[:term]
     }.to_json
   end
