@@ -62,4 +62,16 @@ class Searcher
     iteratable_results.each(&block)
   end
 
+  def errors
+    @errors ||= []
+  end
+
+  def errors?
+    reify
+    errors.any?
+  end
+
+  def add_error(msg)
+    errors << msg
+  end
 end

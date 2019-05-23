@@ -49,8 +49,14 @@ $(document).on('turbolinks:load', function() {
 
           // Fetch data
           $.getJSON(search_url).done(function(data) {
-            results.html(data.results_html);
-            label.html(data.tab_label_html);
+            if (data.errors_html) {
+              results.html(data.errors_html);
+              label.html(label.data('error'));
+            }
+            else {
+              results.html(data.results_html);
+              label.html(data.tab_label_html);
+            }
           });
         }
         else {

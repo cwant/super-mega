@@ -1,0 +1,6 @@
+<h3><%= t('searchers.errors.errors') %></h3>
+<ul>
+  <% @searcher.errors.each do |error| %>
+    <li><%= error %></li>
+  <% end %>
+</ul>

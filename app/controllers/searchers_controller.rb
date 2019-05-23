@@ -17,21 +17,25 @@ class SearchersController < ApplicationController
     raise ActionController::RoutingError unless SEARCHERS.key?(id)
 
     @config = SEARCHERS[id]
+    search_class = "#{@config[:type]}_searcher".classify.constantize
+    @searcher = search_class.new(@config)
+                            .term(search_params[:term])
+                            .page(page)
     respond_to do |format|
-      json = search(@config[:type])
+      if @searcher.errors?
+        json = render_errors
+      else
+        json = render_results
+      end
       format.json { render json: json }
     end
   end
 
   private
 
-  def search(type)
-    search_class = "#{type}_searcher".classify.constantize
-    template = "#{type}_results.html.erb"
+  def render_results # rubocop:disable Metrics/AbcSize
+    template = "#{@config[:type]}_results.html.erb"
 
-    @searcher = search_class.new(@config)
-                            .term(search_params[:term])
-                            .page(page)
     json = @searcher.all
     out = { results_html: render_to_string(partial: template) }
     out[:tab_label_html] = search_tab_label(params[:id], count: @searcher.total_count)
@@ -39,6 +43,10 @@ class SearchersController < ApplicationController
     out
   end
 
+  def render_errors # rubocop:disable Metrics/AbcSize
+    template = "errors.html.erb"
+    { errors_html: render_to_string(partial: template) }
+  end
 
   def search_params
     params.permit(:term, :tab, :page, :per_page, :sort, :direction)
