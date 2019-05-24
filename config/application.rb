@@ -1,6 +1,12 @@
 require_relative 'boot'
 
-require 'rails/all'
+# CW: Don't need a database, so ...
+# require 'rails/all'
+
+# CW: Need these though
+require "action_controller/railtie"
+require "action_mailer/railtie"
+require "sprockets/railtie"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
