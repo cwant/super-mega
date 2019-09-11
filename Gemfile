@@ -50,6 +50,7 @@ gem 'jquery-rails'
 gem "actionview", ">= 5.2.2.1"
 gem "railties", ">= 5.2.2.1"
 gem "bootstrap", ">= 4.3.1"
+gem 'nokogiri', '~> 1.10.4'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
