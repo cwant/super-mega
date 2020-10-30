@@ -7,7 +7,7 @@ ruby '2.5.1'
 gem 'rails', '~> 5.2.2'
 
 # Security issue
-gem 'rack', '~> 2.0.8'
+gem 'rack', '~> 2.1.4'
 
 # Use Puma as the app server
 gem 'puma', '~> 3.12'
