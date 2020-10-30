@@ -47,7 +47,10 @@ gem 'font-awesome-rails'
 gem 'jquery-rails'
 
 # From security alerts
-gem "actionview", ">= 5.2.2.1"
+gem "actionpack", "~> 5.2.4.3"
+gem "actionview", "~> 5.2.4.2"
+gem "activestorage", "~> 5.2.4.3"
+gem "activesupport", "~> 5.2.4.3"
 gem "railties", ">= 5.2.2.1"
 gem "bootstrap", ">= 4.3.1"
 gem 'nokogiri', '~> 1.10.8'
