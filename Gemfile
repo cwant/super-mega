@@ -6,9 +6,6 @@ ruby '2.5.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.2'
 
-# Security issue
-gem 'rack', '~> 2.0.8'
-
 # Use Puma as the app server
 gem 'puma', '~> 3.12'
 # Use SCSS for stylesheets
@@ -54,6 +51,8 @@ gem "activesupport", "~> 5.2.4.3"
 gem "railties", ">= 5.2.2.1"
 gem "bootstrap", ">= 4.3.1"
 gem 'nokogiri', '~> 1.10.8'
+gem 'rack', '~> 2.1.4'
+gem 'websocket-extensions', '~> 0.1.5'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
