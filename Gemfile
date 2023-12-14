@@ -48,7 +48,7 @@ gem "activestorage", "~> 5.2.4.3"
 gem "activesupport", "~> 5.2.4.3"
 gem "bootstrap", ">= 4.3.1"
 gem 'kaminari', '~>1.2.1'
-gem 'nokogiri', '~> 1.10.8'
+gem 'nokogiri', '~> 1.12.5'
 gem 'rack', '~> 2.1.4'
 gem "railties", ">= 5.2.2.1"
 gem 'websocket-extensions', '~> 0.1.5'
