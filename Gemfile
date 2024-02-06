@@ -49,7 +49,7 @@ gem "activesupport", "~> 5.2.4.3"
 gem "bootstrap", ">= 4.3.1"
 gem 'kaminari', '~>1.2.1'
 gem 'nokogiri', '~> 1.12.5'
-gem 'rack', '~> 2.1.4'
+gem 'rack', '~> 2.2.6'
 gem "railties", ">= 5.2.2.1"
 gem 'websocket-extensions', '~> 0.1.5'
 
